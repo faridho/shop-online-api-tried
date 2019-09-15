@@ -16,3 +16,18 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::group([
+  'prefix' => 'try'
+], function() {
+  Route::post('registertetoken', 'Tries\TriesController@registerToken');
+  Route::post('generatetoken', 'Tries\TriesController@generateToken');
+});
+
+Route::group([
+  'prefix'     => 'try',
+  'middleware' => ['jwt.verify']
+], function() {
+  Route::get('accesstoken', 'Tries\TriesController@accessToken');
+  Route::get('accessusers', 'Tries\TriesController@accessUsers');
+});
