@@ -163,6 +163,11 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 
         /*
+         * Cloud storage...
+         */
+        App\Providers\GoogleStorageServiceProvider::class,
+
+        /*
          * Package Service Providers...
          */
 
@@ -179,7 +184,6 @@ return [
          * JWT...
          */
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
-
     ],
 
     /*

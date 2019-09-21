@@ -12,3 +12,8 @@ env_variables:
   # Put production environment variables here.
   APP_LOG: errorlog
   APP_KEY: base64:e5DQWdGJemURXAO6kBI1CI6QmkzvPnsB/8319vplOHI=
+
+  # cloud storage
+  FILESYSTEM_DRIVER: gcs
+  GOOGLE_CLOUD_PROJECT_ID: my-online-store-252614
+  GOOGLE_CLOUD_STORAGE_BUCKET: faridho-bucket

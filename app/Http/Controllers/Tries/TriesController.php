@@ -10,6 +10,7 @@ use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use App\User;
 use DB;
+use Storage;
 
 class TriesController extends Controller
 {
@@ -61,6 +62,11 @@ class TriesController extends Controller
     public function accessUsers() {
       $users = DB::select("CALL users_getAll()");
       return response()->json(compact('users'), 200);
+    }
+
+    public function uploadBucket(Request $request) {
+      $path = $request->file('banner_name')->store('try_upload');
+      return $path;
     }
 }
 

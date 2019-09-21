@@ -22,6 +22,7 @@ Route::group([
 ], function() {
   Route::post('registertetoken', 'Tries\TriesController@registerToken');
   Route::post('generatetoken', 'Tries\TriesController@generateToken');
+  Route::post('uploadbucket', 'Tries\TriesController@uploadBucket');
 });
 
 Route::group([
