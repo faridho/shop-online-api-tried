@@ -32,3 +32,44 @@ Route::group([
   Route::get('accesstoken', 'Tries\TriesController@accessToken');
   Route::get('accessusers', 'Tries\TriesController@accessUsers');
 });
+
+/*
+|--------------------------------------------------------------------------
+| Auth Routes
+|--------------------------------------------------------------------------
+*/
+Route::group([
+    'prefix'     => 'auth'
+  ], function () {
+    Route::post('login', 'Users\LoginController@login');
+    Route::post('register', 'Users\LoginController@register');
+});
+
+
+/*
+|--------------------------------------------------------------------------
+| Log Out Routes
+|--------------------------------------------------------------------------
+*/
+Route::group([
+  'prefix'     => 'auth',
+  'middleware' => 'jwt.verify'
+], function () {
+  Route::get('logout', 'Users\LoginController@logout');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Category Routes
+|--------------------------------------------------------------------------
+*/
+Route::group([
+  'prefix'     => 'category',
+  'middleware' => 'jwt.verify'
+], function () {
+  Route::post('insert', 'Category\CategoryController@insert');
+  Route::get('get', 'Category\CategoryController@get');
+  Route::get('get/{id}', 'Category\CategoryController@getId');
+  Route::delete('delete/{id}', 'Category\CategoryController@delete');
+  Route::put('put', 'Category\CategoryController@put');
+});
