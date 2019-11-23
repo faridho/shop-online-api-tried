@@ -60,7 +60,7 @@ Route::group([
 
 /*
 |--------------------------------------------------------------------------
-| Category Routes
+| Category Header Routes
 |--------------------------------------------------------------------------
 */
 Route::group([
@@ -72,4 +72,49 @@ Route::group([
   Route::get('get/{id}', 'Category\CategoryController@getId');
   Route::delete('delete/{id}', 'Category\CategoryController@delete');
   Route::put('put', 'Category\CategoryController@put');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Menu Routes
+|--------------------------------------------------------------------------
+*/
+Route::group([
+  'prefix'     => 'menu'
+], function () {
+  Route::get('all', 'Menu\MenuController@getMenu');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Category Header Routes
+|--------------------------------------------------------------------------
+*/
+Route::group([
+  'prefix'     => 'categoryheader',
+  'middleware' => 'jwt.verify'
+], function () {
+  Route::post('insert', 'Category\CategoryHeaderController@insert');
+  Route::get('get', 'Category\CategoryHeaderController@get');
+  Route::get('get/{id}', 'Category\CategoryHeaderController@getId');
+  Route::delete('delete/{id}', 'Category\CategoryHeaderController@delete');
+  Route::put('put', 'Category\CategoryHeaderController@put');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Product Routes
+|--------------------------------------------------------------------------
+*/
+Route::group([
+  'prefix'      => 'product',
+  'middleware'  => 'jwt.verify' 
+], function() {
+  Route::post('insert', 'Product\ProductController@insert');
+});
+
+Route::group([
+  'prefix'      => 'product',
+], function() {
+  Route::get('get/{offset}', 'Product\ProductController@get');
 });

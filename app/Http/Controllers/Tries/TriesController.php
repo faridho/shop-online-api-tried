@@ -69,5 +69,3 @@ class TriesController extends Controller
       return $path;
     }
 }
-
-

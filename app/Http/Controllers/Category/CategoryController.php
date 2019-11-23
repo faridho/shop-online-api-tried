@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
-use DB;
 use App\Helpers\ResponseHelper as RS;
 use App\Category;
 
@@ -13,18 +12,21 @@ class CategoryController extends Controller
 {
     public function insert(Request $request) {
       $validator = Validator::make($request->all(), [
-        'categoryName' => 'required|string|max:15'
+        'categoryHeader' => 'required|numeric', 
+        'categoryName' => 'required|string|max:50'
       ]);
 
       if($validator->fails()) {
         return response()->json($validator->errors(), 400);
       }
 
-      $category_name = $request->get('categoryName');
+      $category_header = $request->get('categoryHeader');
+      $category_name  = $request->get('categoryName');
 
       try {
         $insert = Category::create([
-          'category_name' => $category_name
+          'category_header' => $category_header,
+          'category_name'   => $category_name
         ]);
       } catch (\Exception $th) {
         $response = array(
@@ -110,6 +112,7 @@ class CategoryController extends Controller
     public function put(Request $request) {
       $validator = Validator::make($request->all(), [
         'id'           => 'required',
+        'categoryHeader' => 'required|numeric',
         'categoryName' => 'required|string|max:15'
       ]);
 
@@ -117,13 +120,15 @@ class CategoryController extends Controller
         return response()->json($validator->errors(), 400);
       }
 
-      $id            = $request->get('id');
-      $category_name = $request->get('categoryName');
+      $id               = $request->get('id');
+      $category_header  = $request->get('categoryHeader');
+      $category_name    = $request->get('categoryName');
 
       try {
         $update = Category::where('id', $id)->
         update([
-          'category_name' => $category_name
+          'category_header'  => $category_header,
+          'category_name'    => $category_name
         ]);
       } catch (\Exception $th) {
         $response = array(

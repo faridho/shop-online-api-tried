@@ -4,14 +4,18 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class Product extends Model
 {
-    protected $table = 'category';
+    protected $table = 'product';
     protected $primaryKey = 'id';
     protected $fillable = [
-      'category_header',
-      'category_name',
-      'status'
+      'id',
+      'category',
+      'name',
+      'stock',
+      'price',
+      'status',
+      'thumbnail'
     ];
 
     const CREATED_AT = 'created_date';

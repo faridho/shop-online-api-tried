@@ -168,6 +168,11 @@ return [
         App\Providers\GoogleStorageServiceProvider::class,
 
         /*
+         * CORS
+         */
+        Barryvdh\Cors\ServiceProvider::class,
+
+        /*
          * Package Service Providers...
          */
 
