@@ -117,4 +117,5 @@ Route::group([
   'prefix'      => 'product',
 ], function() {
   Route::get('get/{offset}', 'Product\ProductController@get');
+  Route::get('detail/{id}', 'Product\ProductController@getDetail');
 });

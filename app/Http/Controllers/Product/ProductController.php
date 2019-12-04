@@ -81,4 +81,29 @@ class ProductController extends Controller
 
     return response()->json(compact('response'), 200);
   }
+
+  public function getDetail($id) {
+    try {
+      $row = Product::select('product.id', 'product.name', 'category.id as category_id', 'category.category_name', 'product.stock', 'product.price', 'product.thumbnail')
+                      ->join('category', 'product.category', '=', 'category.id')
+                      ->where('product.id', $id)
+                      ->first();
+    } catch (\Exception $th) {
+      $row = array();
+      $response = array(
+        'status'  => false,
+        'message' => $th->getMessage(),
+        'data' => $row
+      );
+
+      return response()->json(compact('response'), 500);
+    }
+
+    $status = true;
+    $message = 'Data found';
+    $data = $row;
+
+    $response = RS::getResponse($status, $message, $data);
+    return response()->json(compact('response'), 200);
+  }
 }
