@@ -23,7 +23,11 @@ class LoginController extends Controller
       ]);
 
       if($validator->fails()) {
-        return response()->json($validator->errors(), 400);
+        $response = array(
+          'status'  => false,
+          'message'   => $validator->errors()->all()
+        );
+        return response()->json(compact('response'));
       }
 
       $user = User::create([
@@ -35,7 +39,8 @@ class LoginController extends Controller
       $token = JWTAuth::fromUser($user);
 
       $response = array(
-        'message' => 'Register success',
+        'status'  => true,
+        'message' => 'Register success. Please login using your username and password',
         'token'   => $token,
         'data'    => $user
       );
@@ -45,34 +50,41 @@ class LoginController extends Controller
 
     public function login(Request $request) {
       $validator = Validator::make($request->all(), [
-        'email'     => 'required|string|email|max:255',
-        'password'  => 'required|string|max:255'
+        'email'     => 'required',
+        'password'  => 'required'
       ]);
 
       if($validator->fails()) {
-        return response()->json($validator->errors(), 400);
+        return response()->json($validator->errors()->all());
       }
 
       $credentials = $request->only('email', 'password');
 
       try {
         if(!$token = JWTAuth::attempt($credentials)) {
-          return response()->json([
-            'message' => 'Invalid credentials'
-          ], 400);
+          $response = array (
+            'status' => false,
+            'message' => 'Invalid Credentials'
+          );
+
+          return response()->json(compact('response'));
         }
       } catch (JWTException $th) {
-        return response()->json([
-          'message' => 'could not create token'
-        ], 500);
+        $response = array (
+          'status' => false,
+          'message' => 'Could not create token'
+        );
+
+        return response()->json(compact('response'));
       }
 
       $email    = $request->get('email');
       $dataUser = User::select('name', 'email')
                         ->where('email', $email)
-                        ->get();
+                        ->first();
       
       $response = array(
+        'status'  => true,
         'message' => 'Login Success',
         'token'   => $token,
         'data'    => $dataUser
